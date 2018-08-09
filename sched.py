@@ -1,6 +1,7 @@
 import kube_deploy as kd
 from datetime import datetime, timedelta
 import motor.motor_tornado
+import sys
 
 db = motor.motor_tornado.MotorClient().ResourceAllocation
 
@@ -10,3 +11,7 @@ userdata = [[l["username"],l["cpulimit"],l["memlimit"],l["podlimit"],l["state"],
 
 
 print(userdata)
+
+
+if __name__=="__main__":
+    

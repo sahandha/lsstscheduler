@@ -246,7 +246,8 @@ def namepace_cleanup(namespace):
     deps = api.list_namespaced_deployment(namespace)
     for dep in deps.items:
         delete_deployment(namespace,dep.metadata.name)
-
+    update_quota(namespace, namespace, maxmem='0Mi', maxcpu='0m', maxpods='0')
+    
 def main(action='', user='test', token='qwerty', passwd=None):
     print("Call functions directly")
 

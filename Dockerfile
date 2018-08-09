@@ -14,7 +14,7 @@ RUN pip install --upgrade pip
 RUN pip install git+https://github.com/kubernetes-client/python.git
 RUN pip install motor
 
-Add kube_deploy.py /external/server
-Add sched.py /external/server
+Add kube_deploy.py /
+Add sched.py /
 
 RUN apt-get install -y vim; exit 0
