@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: lsstsched
+  labels:
+    app: lsstsched
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lsstsched
+  template:
+    metadata:
+      labels:
+        app: lsstsched
+    spec:
+      containers:
+      - name: lsstsched
+        image: sahandha/lsstscheduler
+        command: ["python /sched.py"]
