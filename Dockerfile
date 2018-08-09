@@ -4,7 +4,6 @@ MAINTAINER Sahand Hariri sahandha@gmail.com
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
-RUN sudo apt-get -qq -y install software-properties-common apt-utils
 
 RUN sudo apt-get install -y python-pip python-dev build-essential
 RUN sudo apt-get install -y git
