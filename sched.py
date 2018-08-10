@@ -1,3 +1,7 @@
+import tornado.ioloop
+import tornado.web
+from tornado.web import asynchronous
+
 import kube_deploy as kd
 from datetime import datetime, timedelta
 import motor.motor_tornado
@@ -14,3 +18,8 @@ if __name__=="__main__":
     userdata = [[l["username"],l["cpulimit"],l["memlimit"],l["podlimit"],l["state"],str(l["expirationdate"]-datetime.now())] for l in doc]
 
     print(userdata)
+
+    print("server running at localhost:8888 ...")
+    ("press ctrl+c to close.")
+    application.listen(8888)
+    tornado.ioloop.IOLoop.instance().start()
