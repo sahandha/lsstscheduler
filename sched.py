@@ -18,7 +18,7 @@ def getUserData(db):
     return userdata
 
 @gen.coroutine
-def printUserData(db)
+def printUserData(db):
     doc = db.users.find({},{"_id": 0 ,"username": 1, "cpulimit": 1, "memlimit": 1, "podlimit": 1, "state": 1, "expirationdate": 1}).to_list(length=100)
     userdata = [[l["username"],l["cpulimit"],l["memlimit"],l["podlimit"],l["state"],str(l["expirationdate"]-datetime.now())] for l in doc]
 
