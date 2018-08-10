@@ -1,7 +1,7 @@
 import kube_deploy as kd
 from datetime import datetime, timedelta
-import pymongo
 import sys
+from pymongo import MongoClient
 
 
 
