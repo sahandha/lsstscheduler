@@ -12,6 +12,7 @@ RUN sudo apt-get install -y python-pip python-dev build-essential
 RUN sudo apt-get install -y git
 RUN pip install --upgrade pip
 RUN pip install git+https://github.com/kubernetes-client/python.git
+RUN pip install tornado
 RUN pip install motor
 
 Add kube_deploy.py /kube_deploy.py
