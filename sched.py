@@ -23,7 +23,7 @@ if __name__=="__main__":
     print("difference: ", diff)
     print("difference in seconds: ", diff.seconds)
 
-    if diff.seconds < 0:
+    if diff.total_seconds() < 0:
         print("Time's up. Killing jobs.")
         kd.delete_cronjob(namespace)
         kd.namespace_cleanup(namespace)
