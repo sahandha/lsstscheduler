@@ -1,14 +1,14 @@
-import kube_deploy as kd
 from datetime import datetime, timedelta
 import sys
 from pymongo import MongoClient
-
+import requests
 
 
 if __name__=="__main__":
-    namespace = sys.argv[1]
-    dbhost = sys.argv[2]
-    print(sys.argv[1])
+    username  = sys.argv[1]
+    namespace = sys.argv[2]
+    dbhost    = sys.argv[3]
+
     client = MongoClient("{}.resourceallocation.svc.cluster.local".format(dbhost), 27017)
     db = client.ResourceAllocation
     doc = db.users.find_one({"namespace":namespace})
@@ -25,16 +25,6 @@ if __name__=="__main__":
 
     if diff.total_seconds() < 0:
         print("Time's up. Killing jobs.")
-        kd.delete_cronjob(namespace)
-        kd.namespace_cleanup(namespace)
-
-        db.users.update_one(
-        {'namespace':namespace},
-        {
-            "$set":{
-            "jobs":jobs,
-            "state":"inactive"
-            }
-        })
+        requests.get("https://lsstlabs.ncsa.illinois.edu/lsstsim/deactivateuser", params={"user":username},verify=False)
     else:
         print("There is still time. Keep runnning.")
