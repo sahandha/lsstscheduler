@@ -77,6 +77,20 @@ def list_priority_class():
     except ApiException as e:
         print("Exception when calling SchedulingV1alpha1Api->list_priority_class: %s\n" % e)
 
+def list_deployments(namespace):
+    try:
+        config.load_kube_config()
+    except:
+        config.load_incluster_config()
+
+    api = client.AppsV1Api()
+
+    try:
+        api_response = api.list_namespaced_deployment(namespace)
+        return api_response
+    except ApiException as e:
+        print("Exception when calling SchedulingV1alpha1Api->list_priority_class: %s\n" % e)
+
 
 def create_namespace(name):
     try:
@@ -236,18 +250,29 @@ def delete_deployment(namespace,name):
     except ApiException as e:
         print("Exception when calling ExtensionsV1beta1Api->delete_namespaced_deployment: %s\n" % e)
 
-def namepace_cleanup(namespace):
+def delete_all_deployments(namespace):
     try:
         config.load_kube_config()
     except:
         config.load_incluster_config()
 
     api = client.ExtensionsV1beta1Api()
-    deps = api.list_namespaced_deployment(namespace)
-    for dep in deps.items:
-        delete_deployment(namespace,dep.metadata.name)
+
+    body = client.V1DeleteOptions(propagation_policy="Foreground",grace_period_seconds=5)
+    pretty = 'true'
+
+    try:
+        deps = list_deployments(namespace)
+        deps = [item.metadata.name for item in deps.items]
+        for dep in deps:
+            api.delete_namespaced_deployment(dep, namespace, body, pretty=pretty)
+    except ApiException as e:
+        print("Exception when calling ExtensionsV1beta1Api->delete_namespaced_deployment: %s\n" % e)
+
+def namespace_cleanup(namespace):
+    delete_all_deployments(namespace)
     update_quota(namespace, namespace, maxmem='0Mi', maxcpu='0m', maxpods='0')
-    
+
 def main(action='', user='test', token='qwerty', passwd=None):
     print("Call functions directly")
 

@@ -18,5 +18,5 @@ spec:
       containers:
       - name: lsstsched
         image: sahandha/lsstscheduler
-        imagePullPolicy: Always
-        command: ["/bin/bash"]
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]

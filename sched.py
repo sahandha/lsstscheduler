@@ -11,4 +11,3 @@ if __name__=="__main__":
     db = client.ResourceAllocation
     doc = db.users.find_one()
     print(doc)
-    printUserData(db)
