@@ -18,6 +18,10 @@ if __name__=="__main__":
     now = datetime.now()
 
     diff = expdate - now
+    print("expiration: ", expdate)
+    print("Now: ", now)
+    print("difference: ", diff)
+    print("difference in seconds: ", diff.seconds)
 
     if diff.seconds < 0:
         print("Time's up. Killing jobs.")
