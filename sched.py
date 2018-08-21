@@ -6,8 +6,21 @@ from pymongo import MongoClient
 
 
 if __name__=="__main__":
+    namespace = sys.argv[1]
     print(sys.argv[1])
     client = MongoClient('mongodb', 27017)
     db = client.ResourceAllocation
-    doc = db.users.find_one()
-    print(doc)
+    doc = db.users.find_one({"namespace":namespace})
+
+    expdate = doc["expirationdate"]
+
+    now = datetime.now()
+
+    diff = expdate - now
+
+    if diff.seconds() < 0:
+        print("Time's up. Killing jobs.")
+        kd.delete_cronjob(namespace)
+        kd.namespace_cleanup(namespace)
+    else:
+        print("There is still time. Keep runnning.")
