@@ -9,7 +9,7 @@ if __name__=="__main__":
     namespace = sys.argv[1]
     dbhost = sys.argv[2]
     print(sys.argv[1])
-    client = MongoClient(dbhost, 27017)
+    client = MongoClient("{}.{}.svc.cluster.local".format(dbhost,namespace), 27017)
     db = client.ResourceAllocation
     doc = db.users.find_one({"namespace":namespace})
 
