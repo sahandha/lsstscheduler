@@ -19,7 +19,7 @@ if __name__=="__main__":
 
     diff = expdate - now
 
-    if diff.seconds() < 0:
+    if diff.seconds < 0:
         print("Time's up. Killing jobs.")
         kd.delete_cronjob(namespace)
         kd.namespace_cleanup(namespace)
