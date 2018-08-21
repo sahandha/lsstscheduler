@@ -22,5 +22,14 @@ if __name__=="__main__":
         print("Time's up. Killing jobs.")
         kd.delete_cronjob(namespace)
         kd.namespace_cleanup(namespace)
+
+        db.users.update_one(
+        {'namespace':namespace},
+        {
+            "$set":{
+            "jobs":jobs,
+            "state":"inactive"
+            }
+        })
     else:
         print("There is still time. Keep runnning.")
